@@ -1,24 +1,20 @@
+import { Injectable } from "@nestjs/common";
 import { MessagesRepository } from "./messages.repository";
 
+@Injectable()
 export class MessagesService {
 
-  messagesRepo: MessagesRepository;
+  constructor(public messagesRepo: MessagesRepository) { }
 
-  constructor() {
-    // Service is creating it's own Dependencies ( Very Bad Practice)
-    // We relies on Dependency injection concept :-
-    this.messagesRepo = new MessagesRepository();
+  async findOne(id: string) {
+    return await this.messagesRepo.findOne(id);
   }
 
-  findOne(id: string) {
-    return this.messagesRepo.findOne(id);
+  async findAll() {
+    return await this.messagesRepo.findAll();
   }
 
-  findAll() {
-    return this.messagesRepo.findAll();
-  }
-
-  create(content: string) {
-    return this.messagesRepo.create(content);
+  async create(content: string) {
+    return await this.messagesRepo.create(content);
   }
 }
